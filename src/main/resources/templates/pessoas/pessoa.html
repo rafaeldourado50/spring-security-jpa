@@ -1,0 +1,83 @@
+<html layout:decorator="layout" th:inline="text">
+
+<body layout:fragment="content">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong><label th:text="#{title.cadastro.pessoas}"></label></strong>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" th:object="${pessoa}" th:action="@{/pessoas}" method="POST" style="margin: 10px"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <fieldset>
+                    <div class="form-group row">
+                        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                            <span th:text="#{mensagem.submissao.formulario}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            <label th:text="#{label.identificador}"></label>
+                            <input type="text" class="form-control input-sm" id="id" th:field="*{id}" readonly/>
+                        </div>
+                        <div class="col-md-5" th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+                            <label th:text="#{label.nome}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="text" class="form-control input-sm" th:field="*{nome}"/>
+                            <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: #B00000"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('sexo')}? 'has-error'">
+                            <label th:text="#{label.sexo}"></label>
+                            <select class="form-control" th:field="*{sexo}">
+                                <option value="" selected="selected">Selecione</option>
+                                <option th:each="sexo : ${sexos}" th:value="${sexo}" th:text="${sexo.descricao}"></option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('dataNascimento')}? 'has-error'">
+                            <label th:text="#{label.data.nascimento}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="date" class="form-control input-sm" th:field="*{dataNascimento}"/>
+                            <p th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('cpf')}? 'has-error'">
+                            <label th:text="#{label.cpf}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="text" class="form-control input-sm" th:field="*{cpf}"/>
+                            <p th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}" style="color: #B00000"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                            <label th:text="#{label.email}"></label>
+                            <input type="email" class="form-control input-sm" th:field="*{email}"/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('naturalidade')}? 'has-error'">
+                            <label th:text="#{label.naturalidade}"></label>
+                            <input type="text" class="form-control input-sm" th:field="*{naturalidade}"/>
+                            <p th:if="${#fields.hasErrors('naturalidade')}" th:errors="*{naturalidade}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('nacionalidade')}? 'has-error'">
+                            <label th:text="#{label.nacionalidade}"></label>
+                            <input type="text" class="form-control input-sm" th:field="*{nacionalidade}"/>
+                            <p th:if="${#fields.hasErrors('nacionalidade')}" th:errors="*{nacionalidade}" style="color: #B00000"></p>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-sm btn-success">
+                    <span class="glyphicon glyphicon-ok"></span> [[#{label.salvar}]]
+                </button>
+                <a th:href="@{/pessoas}" class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span> [[#{label.cancelar}]]
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

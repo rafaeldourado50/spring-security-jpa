@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title th:text="#{title.sistema}"></title>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+</head>
+
+<body layout:fragment="menu">
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li id="home" th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}">
+                    <a href="/"><span class="glyphicon glyphicon-home"></span> [[#{label.inicio}]]</a>
+                </li>
+                <li id="pessoas" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/pessoas') ? 'active':''}" 
+                	sec:authorize="hasRole('ROLE_USER')">
+                    <a th:href="@{/pessoas}"><span class="glyphicon glyphicon-user"></span> [[#{label.pessoas}]]</a>
+                </li>
+                <li id="usuarios" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/usuarios') ? 'active':''}"
+                	sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/usuarios}"><span class="glyphicon glyphicon-user"></span> [[#{label.usuarios}]]</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-right" sec:authorize="isAuthenticated()">
+                	<a th:href="@{/logout}">
+                		<span class="glyphicon glyphicon-link"></span>[[#{label.logout}]]
+                	</a>
+                </li>
+                <li class="navbar-right" sec:authorize="isAuthenticated()">
+               		<a>
+               			<span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+               		</a>
+                </li>
+                <li class="navbar-right" sec:authorize="!isAuthenticated()">
+                	<a th:href="@{/login}">
+                		<span class="glyphicon glyphicon-link"></span>[[#{label.login}]]
+                	</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>
+
+<body layout:fragment="content">
+
+</body>
+
+</html>

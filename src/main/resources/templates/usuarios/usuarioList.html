@@ -1,0 +1,48 @@
+<html layout:decorator="layout" th:inline="text">
+
+<body layout:fragment="content">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong><label th:text="#{title.cadastro.usuarios}"></label></strong>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th style="width: 90px !important;"><label th:text="#{label.acoes}"></label></th>
+                    <th><label th:text="#{label.login}"></label></th>
+                    <th><label th:text="#{label.roles}"></label></th>
+                    <th><label th:text="#{label.ativo}"></label></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td style="width: 90px !important;">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-primary" th:href="@{/usuarios/{id}/update(id=${usuario.id})}"
+                               th:title="#{label.editar}">
+                                <i class="glyphicon glyphicon-pencil icon-white"></i>
+                            </a>
+                            <a class="delete btn btn-sm btn-danger" th:href="@{/usuarios/{id}/delete(id=${usuario.id})}"
+                               th:title="#{label.excluir}">
+                                <i class="glyphicon glyphicon-trash icon-white"></i>
+                            </a>
+                        </div>
+                    </td>
+                    <td th:text="${usuario.login}"></td>
+                    <td th:text="${usuario.roles}"></td>
+                    <td th:text="${usuario.ativo}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a th:href="@{/usuarios/create}" class="btn btn-sm btn-success">
+            <span class="glyphicon glyphicon-plus"></span> [[#{label.adicionar}]]
+        </a>
+    </div>
+</div>
+</body>
+</html>

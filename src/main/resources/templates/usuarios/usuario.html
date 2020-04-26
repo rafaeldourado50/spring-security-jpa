@@ -1,0 +1,66 @@
+<html layout:decorator="layout" th:inline="text">
+
+<body layout:fragment="content">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong><label th:text="#{title.cadastro.usuarios}"></label></strong>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" th:object="${usuario}" th:action="@{/usuarios}" method="POST" style="margin: 10px"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <fieldset>
+                    <div class="form-group row">
+                        <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                            <span th:text="#{mensagem.submissao.formulario}"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-1">
+                            <label th:text="#{label.identificador}"></label>
+                            <input type="text" class="form-control input-sm" id="id" th:field="*{id}" readonly/>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('login')}? 'has-error'">
+                            <label th:text="#{label.login}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="text" class="form-control input-sm" th:field="*{login}"/>
+                            <p th:if="${#fields.hasErrors('login')}" th:errors="*{login}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('senha')}? 'has-error'">
+                            <label th:text="#{label.senha}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="password" class="form-control input-sm" th:field="*{senha}"/>
+                            <p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" style="color: #B00000"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3" th:classappend="${#fields.hasErrors('roles')}? 'has-error'">
+                            <label th:text="#{label.roles}"></label>
+                            <span class="glyphicon glyphicon-asterisk" style="color: #B00000"></span>
+                            <input type="text" class="form-control input-sm" th:field="*{roles}"/>
+                            <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" style="color: #B00000"></p>
+                        </div>
+                        <div class="col-md-2" th:classappend="${#fields.hasErrors('ativo')}? 'has-error'">
+                            <label th:text="#{label.ativo}"></label>
+                            <select class="form-control" th:field="*{ativo}">
+                                <option value="" selected="selected">Selecione</option>
+                                <option th:each="ativo : ${ativos}" th:value="${ativo}" th:text="${ativo.descricao}"></option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('ativo')}" th:errors="*{ativo}" style="color: #B00000"></p>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="form-group row">
+                <button type="submit" class="btn btn-sm btn-success">
+                    <span class="glyphicon glyphicon-ok"></span> [[#{label.salvar}]]
+                </button>
+                <a th:href="@{/usuarios}" class="btn btn-sm btn-danger">
+                    <span class="glyphicon glyphicon-remove"></span> [[#{label.cancelar}]]
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
