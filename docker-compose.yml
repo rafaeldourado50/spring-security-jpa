@@ -1,32 +1,10 @@
-version: "3"
+version: '3'
 services:
-  postgres:
-    image: my-postgres-image
-    network_mode: bridge
-    container_name: my-postgres-image
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    expose:
-      - 5432
+  docker-app:
+    image: rafaeldourado50/my-app-image
     ports:
-      - 5555:5432
-    environment:
-      - POSTGRES_PASSWORD=GS9O78S9
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=testedb
-    restart: unless-stopped
-  application:
-    image: spring-security-jpa
-    network_mode: bridge
-    container_name: spring-security-jpa
-    expose:
-      - 8080
-    ports:
-      - 9090:8080
-    restart: unless-stopped
+      - "8080:8080"
     depends_on:
-      - postgres
-    links:
-      - postgres
-volumes:
-  postgres-data:
+      - docker-postgres
+  docker-postgres:
+    image: rafaeldourado50/my-postgres-image
